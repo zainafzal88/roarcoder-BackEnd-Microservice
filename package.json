@@ -1,0 +1,23 @@
+{
+  "name": "roarcoder-backend-microservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "getUser.js",
+  "dependencies": {
+    "aws-sdk": "^2.648.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zainafzal88/roarcoder-BackEnd-Microservice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zainafzal88/roarcoder-BackEnd-Microservice/issues"
+  },
+  "homepage": "https://github.com/zainafzal88/roarcoder-BackEnd-Microservice#readme"
+}
