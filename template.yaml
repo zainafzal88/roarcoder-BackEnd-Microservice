@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  SAM Template for user layer backend microservice
+  
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  GetUserFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: get-user/
+      Handler: getuser.lambdaHandler
+      Runtime: nodejs10.x
+      Events:
+        GetUserApi:
+          Type: Api 
+          Properties:
+            Path: /getuser
+            Method: get
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  GetUserApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/getuser/"
+  GetUserFunction:
+    Description: "Get User Lambda Function ARN"
+    Value: !GetAtt GetUserFunction.Arn
+  GetUserFunctionIamRole:
+    Description: "Implicit IAM Role created for Get User function"
+    Value: !GetAtt GetUserFunctionRole.Arn

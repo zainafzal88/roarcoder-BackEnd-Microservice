@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+#ignore node_modules
+node_modules/
+
+# ignore sam folder
+.aws-sam/
