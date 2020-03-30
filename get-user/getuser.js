@@ -4,7 +4,7 @@ const dynamodb = new AWS.DynamoDB.DocumentClient({region: 'ap-southeast-2'})
 exports.lambdaHandler = async (event, context) => {
 
     var params = {
-        TableName: process.env.TABLE
+        TableName: "users"
     };
 
     var userInfo = await dynamodb.scan(params).promise()
