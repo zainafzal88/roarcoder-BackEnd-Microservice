@@ -21,6 +21,18 @@ Resources:
           Properties:
             Path: /getuser
             Method: get
+  UsersTable: # dynamo db table
+    Type: AWS::Serverless::SimpleTable
+    TableName: users
+    Properties:
+      PrimaryKey:
+          Name: UUID
+          Type: String
+    ProvisionedThroughput:
+        ReadCapacityUnit: 5
+        WriteCapacityUnits: 5
+    Tags:
+        AppType: Serverless
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

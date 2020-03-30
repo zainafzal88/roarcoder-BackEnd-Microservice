@@ -11,14 +11,16 @@ exports.lambdaHandler = async (event, context) => {
     let response;
         
     try {
-            response = {
-                statusCode: 200,
-                body: JSON.stringify(userInfo),
-            };
-        }
+        response = {
+            statusCode: 200,
+            body: JSON.stringify(userInfo),
+        };
+    }
     catch (err) {
-        console.log(err);
-        return err;
+        response = {
+            statusCode: 200,
+            body: "An error occured: " + err,
+        };
     }
 
     return response
