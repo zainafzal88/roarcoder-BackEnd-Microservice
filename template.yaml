@@ -12,9 +12,13 @@ Resources:
   GetUserFunction:
     Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: get-user/
       Handler: getuser.lambdaHandler
       Runtime: nodejs10.x
+      Policies:
+        - AmazonDynamoDBReadOnlyAccess
+      Environment:
+        Variables:
+          TABLE: !Ref UsersTable
       Events:
         GetUserApi:
           Type: Api 
