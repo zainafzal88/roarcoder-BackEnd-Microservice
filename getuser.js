@@ -1,12 +1,14 @@
+const url = require('url')
 const AWS = require('aws-sdk')
 const dynamodb = new AWS.DynamoDB.DocumentClient({region: 'ap-southeast-2'})
 
 exports.lambdaHandler = async (event, context) => {
 
+    let uuid = event['pathParameters']['proxy']
     const params = {
         TableName:process.env.TABLE,
         Key: {
-            UUID: "1"
+            UUID: uuid
         },
         ProjectionExpression:"firstName, lastName, title, email, url_LinkedIn, url_Github"
     }
