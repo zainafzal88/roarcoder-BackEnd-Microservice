@@ -23,7 +23,7 @@ Resources:
         GetUserApi:
           Type: Api 
           Properties:
-            Path: /getuser
+            Path: /getuser/{user-UUID}
             Method: get
   UsersTable: # dynamo db table
     Type: AWS::Serverless::SimpleTable
