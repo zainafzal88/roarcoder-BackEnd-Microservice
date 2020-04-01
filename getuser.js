@@ -3,7 +3,7 @@ const dynamodb = new AWS.DynamoDB.DocumentClient({region: 'ap-southeast-2'})
 
 exports.lambdaHandler = async (event, context) => {
 
-    let params = {
+    const params = {
         TableName:process.env.TABLE,
         Key: {
             UUID: "1"
@@ -11,7 +11,7 @@ exports.lambdaHandler = async (event, context) => {
         ProjectionExpression:"firstName, lastName, title, email, url_LinkedIn, url_Github"
     }
 
-    let getUserInfo = await dynamodb.get(params).promise()
+    const getUserInfo = await dynamodb.get(params).promise()
     let response;
         
     try {
