@@ -1,8 +1,7 @@
-const url = require('url')
 const AWS = require('aws-sdk')
 const dynamodb = new AWS.DynamoDB.DocumentClient({region: 'ap-southeast-2'})
 
-exports.lambdaHandler = async (event, context) => {
+exports.lambdaHandler = async (event) => {
 
     let uuid = event['pathParameters']['proxy']
     const params = {
@@ -19,6 +18,11 @@ exports.lambdaHandler = async (event, context) => {
     try {
         response = {
             statusCode: 200,
+
+            // Enabled Cors
+            headers: {
+                "Access-Control-Allow-Origin": "http://localhost"
+            },
             body: JSON.stringify(getUserInfo.Item, null, 3)
         };
     }
