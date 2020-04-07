@@ -21,7 +21,7 @@ exports.lambdaHandler = async (event) => {
 
             // Enabled Cors
             headers: {
-                "Access-Control-Allow-Origin": "http://localhost"
+                "Access-Control-Allow-Origin": "https://roarcoder.dev"
             },
             body: JSON.stringify(getUserInfo.Item, null, 3)
         };
