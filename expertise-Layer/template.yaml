@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: > 
+  Sample SAM Template for expertise-Layer
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  GetExpertiseFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      Handler: getexpertise.lambdaHandler
+      Runtime: nodejs10.x
+      Policies:
+        - AmazonDynamoDBReadOnlyAccess
+      Environment:
+        Variables:
+          TABLE: !Ref ExpertiseTable
+      Events:
+        HelloWorld:
+          Type: Api 
+          Properties:
+            Path: /getexpertise/{proxy+}
+            Method: get
+  ExpertiseTable: # dynamo db table
+    Type: AWS::Serverless::SimpleTable
+    TableName: expertise
+    Properties:
+      PrimaryKey:
+          Name: UUID
+          Type: String
+    ProvisionedThroughput:
+        ReadCapacityUnit: 5
+        WriteCapacityUnits: 5
+    Tags:
+        AppType: Serverless
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  HelloWorldApi:
+    Description: "API Gateway endpoint URL for Prod stage for Get Expertise function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getexpertise/"
+  HelloWorldFunction:
+    Description: "GetExpertise Lambda Function ARN"
+    Value: !GetAtt GetExpertiseFunction.Arn
+  HelloWorldFunctionIamRole:
+    Description: "Implicit IAM Role created for GetExpertise function"
+    Value: !GetAtt GetExpertiseFunction.Arn
