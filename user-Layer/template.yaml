@@ -37,6 +37,18 @@ Resources:
         WriteCapacityUnits: 5
     Tags:
         AppType: Serverless
+  ExpertiseTable: # dynamo db table
+    Type: AWS::Serverless::SimpleTable
+    TableName: area-of-expertise
+    Properties:
+      PrimaryKey:
+          Name: UUID
+          Type: String
+    ProvisionedThroughput:
+        ReadCapacityUnit: 5
+        WriteCapacityUnits: 5
+    Tags:
+        AppType: Serverless
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
