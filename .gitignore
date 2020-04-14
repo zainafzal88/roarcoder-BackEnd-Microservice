@@ -107,7 +107,7 @@ dist
 node_modules/
 
 # ignore sam folder
-.aws-sam/
+.aws-sam/build
 
 # package.json file
 user/package.json
