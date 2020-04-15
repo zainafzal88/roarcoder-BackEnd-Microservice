@@ -3,23 +3,32 @@ const dynamodb = new AWS.DynamoDB.DocumentClient({ region: 'ap-southeast-2' })
 
 let response;
 
-exports.lambdaHandler = async (event, context) => {
+exports.lambdaHandler = async (event) => {
 
     let uuid = event['pathParameters']['proxy']
     const params = {
         TableName: process.env.TABLE,
-        Key: {
-            UUID: uuid
+        KeyConditionExpression: '#uuid = :uuid',
+        ExpressionAttributeNames: {
+            '#uuid': 'UUID'
         },
-        ProjectionExpression: "title, image1, image2, image3, summary"
+        ExpressionAttributeValues: {
+            ':uuid': uuid
+        },
+        ProjectionExpression: 'title, image1, image2, image3, summary, active'
     };
 
-    const getExpertiseInfo = await dynamodb.get(params).promise()
+    const getExpertiseInfo = await dynamodb.query(params).promise();
 
     try {
         response = {
             statusCode: 200,
-            body: JSON.stringify(getExpertiseInfo.Item, null, 3)
+
+            // Enabled Cors
+            headers: {
+                "Access-Control-Allow-Origin": 'https://roarcoder.dev'
+            },
+            body: JSON.stringify(getExpertiseInfo.Items, null, 3)
         };
     }
     catch (err) {
@@ -29,5 +38,5 @@ exports.lambdaHandler = async (event, context) => {
         };
     }
 
-    return response
+    return response;
 };

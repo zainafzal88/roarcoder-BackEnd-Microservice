@@ -25,17 +25,20 @@ Resources:
             Path: /getexpertise/{proxy+}
             Method: get
   ExpertiseTable: # dynamo db table
-    Type: AWS::Serverless::SimpleTable
-    TableName: expertise
+    Type: AWS::DynamoDB::Table
     Properties:
-      PrimaryKey:
-          Name: UUID
-          Type: String
-    ProvisionedThroughput:
-        ReadCapacityUnit: 5
-        WriteCapacityUnits: 5
-    Tags:
-        AppType: Serverless
+      TableName: expertiseTable
+      AttributeDefinitions:
+        - AttributeName: UUID
+          AttributeType: S
+        - AttributeName: title
+          AttributeType: S
+      KeySchema:
+        - AttributeName: UUID
+          KeyType: HASH
+        - AttributeName: title
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
