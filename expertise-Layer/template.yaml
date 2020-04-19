@@ -19,32 +19,63 @@ Resources:
         Variables:
           TABLE: !Ref ExpertiseTable
       Events:
-        HelloWorld:
+        GetExpertiseApi:
           Type: Api 
           Properties:
             Path: /getexpertise/{proxy+}
             Method: get
+  InsertExpertiseFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      Handler: insertexpertise.lambdaHandler
+      Runtime: nodejs10.x
+      Environment:
+        Variables:
+          TABLE: !Ref ExpertiseTable
+      Role: !GetAtt
+        - InsertExpertiseFunctionIamRole
+        - Arn
+  InsertExpertiseFunctionIamRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      Policies:
+        - 
+          PolicyName: 'AmazonDynamoDBWriteOnlyAccess'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'dynamodb:PutItem'
+                Resource: !Join
+                  - '/'
+                  - - !GetAtt
+                      - ExpertiseTable
+                      - Arn
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
   ExpertiseTable: # dynamo db table
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: expertiseTable
+      TableName: expertise
       AttributeDefinitions:
         - AttributeName: UUID
-          AttributeType: S
-        - AttributeName: title
           AttributeType: S
       KeySchema:
         - AttributeName: UUID
           KeyType: HASH
-        - AttributeName: title
-          KeyType: RANGE
       BillingMode: PAY_PER_REQUEST
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
+  GetExpertiseApi:
     Description: "API Gateway endpoint URL for Prod stage for Get Expertise function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getexpertise/"
   HelloWorldFunction:

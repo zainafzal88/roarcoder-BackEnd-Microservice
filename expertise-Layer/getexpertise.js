@@ -9,13 +9,16 @@ exports.lambdaHandler = async (event) => {
     const params = {
         TableName: process.env.TABLE,
         KeyConditionExpression: '#uuid = :uuid',
+        FilterExpression: '#active = :active',
         ExpressionAttributeNames: {
-            '#uuid': 'UUID'
+            '#uuid': 'UUID',
+            '#active': 'active'
         },
         ExpressionAttributeValues: {
-            ':uuid': uuid
+            ':uuid': uuid,
+            ':active': true
         },
-        ProjectionExpression: 'title, image1, image2, image3, summary, active'
+        ProjectionExpression: 'title, image1, image2, image3, summary'
     };
 
     const getExpertiseInfo = await dynamodb.query(params).promise();
@@ -28,7 +31,7 @@ exports.lambdaHandler = async (event) => {
             headers: {
                 "Access-Control-Allow-Origin": 'https://roarcoder.dev'
             },
-            body: JSON.stringify(getExpertiseInfo.Items, null, 3)
+            body: JSON.stringify(getExpertiseInfo, null, 3)
         };
     }
     catch (err) {
