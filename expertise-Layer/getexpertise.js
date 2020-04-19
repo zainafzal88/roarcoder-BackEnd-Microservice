@@ -31,7 +31,7 @@ exports.lambdaHandler = async (event) => {
             headers: {
                 "Access-Control-Allow-Origin": 'https://roarcoder.dev'
             },
-            body: JSON.stringify(getExpertiseInfo, null, 3)
+            body: JSON.stringify(getExpertiseInfo.Items, null, 3)
         };
     }
     catch (err) {
