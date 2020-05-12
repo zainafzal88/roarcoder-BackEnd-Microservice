@@ -9,7 +9,7 @@ exports.lambdaHandler = async (event) => {
         Key: {
             UUID: uuid
         },
-        ProjectionExpression:"firstName, lastName, title, email, url_LinkedIn, url_Github"
+        ProjectionExpression:"firstName, lastName, title, email, url_LinkedIn, url_Github, url_Blogs"
     }
 
     const getUserInfo = await dynamodb.get(params).promise()
@@ -21,7 +21,7 @@ exports.lambdaHandler = async (event) => {
 
             // Enabled Cors
             headers: {
-                "Access-Control-Allow-Origin": "https://roarcoder.dev"
+                "Access-Control-Allow-Origin": "*"
             },
             body: JSON.stringify(getUserInfo.Item, null, 3)
         };

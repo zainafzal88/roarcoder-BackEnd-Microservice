@@ -37,23 +37,8 @@ Resources:
         WriteCapacityUnits: 5
     Tags:
         AppType: Serverless
-  ExpertiseTable: # dynamo db table
-    Type: AWS::Serverless::SimpleTable
-    TableName: area-of-expertise
-    Properties:
-      PrimaryKey:
-          Name: UUID
-          Type: String
-    ProvisionedThroughput:
-        ReadCapacityUnit: 5
-        WriteCapacityUnits: 5
-    Tags:
-        AppType: Serverless
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   GetUserApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getuser/"

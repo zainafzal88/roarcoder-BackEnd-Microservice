@@ -107,7 +107,15 @@ dist
 node_modules/
 
 # ignore sam folder
-.aws-sam/build
+user-Layer/.aws-sam/
+expertise-Layer/.aws-sam/
 
 # package.json file
-user/package.json
+user-Layer/package.json
+expertise-Layer/package.json
+
+# apigateway event file
+expertise-Layer/event.json
+
+# .DS_Store file
+.DS_Store
